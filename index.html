@@ -38,7 +38,7 @@ function permission () {
                 window.addEventListener( "devicemotion", (e) => {
                     // do something for 'e' here.
 					 const { alpha, beta, gamma } = e;
-					 document.getElementById("alpha").innerText = e;
+					 document.getElementById("alpha").innerText = e.alpha + JSON.parse(alpha);
                 })
             }
         })
