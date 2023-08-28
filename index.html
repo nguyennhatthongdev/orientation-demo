@@ -1,0 +1,54 @@
+<html>
+<body>
+<h1>Device Orientation API Mobile Demo</h1>
+<div><button id="button">Request Permission to Access Device Orientation Data</button></div>
+<div>
+  <h4>Alpha:</h4>
+  <p id="alpha"></p>
+</div>
+<div>
+  <h4>Beta:</h4>
+  <p id="beta"></p>
+</div>
+<div>
+  <h4>Gamma:</h4>
+  <p id="gamma"></p>
+</div>
+
+<hr><hr>
+
+<h1>Orientation using chrome dev tools (FOR DESKTOP)</h1>
+<p>To simulate the device orientation we can make use of the chrome dev tool in-built device orientation sensor and simulates in different angles such as portrait, landscape, etc.
+To Open the simulator on desktop first open the developer's console the press Command+Shift+P (Mac) or Ctrl+Shift+P (Windows or Linux) to open the command menu. Type "sensors" and select show sensors.
+Then from the Orientation list select the custom orientation option.</p>
+
+</body>
+</html>
+<script type="text/javascript">
+if ( location.protocol != "https:" ) {
+location.href = "https:" + window.location.href.substring( window.location.protocol.length );
+}
+function permission () {
+    if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+        // (optional) Do something before API request prompt.
+        DeviceMotionEvent.requestPermission()
+            .then( response => {
+            // (optional) Do something after API prompt dismissed.
+            if ( response == "granted" ) {
+                window.addEventListener( "devicemotion", (e) => {
+                    // do something for 'e' here.
+					 const { alpha, beta, gamma } = e;
+					 document.getElementById("alpha").innerText = alpha.toFixed(0);
+  document.getElementById("beta").innerText = beta.toFixed(0);
+  document.getElementById("gamma").innerText = gamma.toFixed(0);
+                })
+            }
+        })
+            .catch( console.error )
+    } else {
+        alert( "DeviceMotionEvent is not defined" );
+    }
+}
+const btn = document.getElementById( "request" );
+document.getElementById("button").addEventListener( "click", permission );
+</script>
